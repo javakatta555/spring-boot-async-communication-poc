@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
-
 import java.net.URI;
-import java.time.Duration;
 
 @Service
 @Slf4j
@@ -23,7 +21,7 @@ public class WebClientService {
         return webClient.get().uri(URI.create(url))
                 .retrieve()
                 .bodyToMono(Rating.class)
-                //.block()  //we can use block to work web client as asynchronous
+                //.block()  //we can use block to work web client as synchronous
                 .doOnError(err->
                         log.info("Received error is :{}", err.getMessage())
                 ).doOnSuccess(res->
